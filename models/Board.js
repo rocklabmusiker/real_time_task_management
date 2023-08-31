@@ -25,8 +25,8 @@ const boardSchema = new Schema({
       type: String,
     },
     members: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
-  });
-  
+  }
+  );
   const Board = mongoose.model('Board', boardSchema);
   
   module.exports = Board;

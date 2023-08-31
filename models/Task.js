@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 //Model schema for Task
 const taskSchema = new Schema({
@@ -48,7 +48,7 @@ const taskSchema = new Schema({
       type: mongoose.Types.ObjectId,
       ref: 'Notification',
     },
-  ]
-});
+  ],
+})
 const task = mongoose.model('task', taskSchema);
 module.exports = task;
