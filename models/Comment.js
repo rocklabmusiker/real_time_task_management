@@ -1,5 +1,6 @@
 const mongoose= require('mongoose');
 const Schema= mongoose.Schema;
+const Joi = require('joi');
 //create a comment model 
 const commentSchema = new Schema({
     task: {
@@ -13,6 +14,7 @@ const commentSchema = new Schema({
     text: {
         type: String,
         required: true,
+       
     },
     createdAt: {
         type: Date,
@@ -21,5 +23,5 @@ const commentSchema = new Schema({
      
 });
 
-const comment = mongoose.Model('comment', commentSchema);
+const comment = mongoose.model('comment', commentSchema);
 module.exports = comment;

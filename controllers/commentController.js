@@ -2,8 +2,9 @@ const comment = require('../models/Comment');
 
 // create comment for task
 
-exports.createComment = async(req,res) => {
+exports.createComment = async (req, res) => {
     const { taskId, authorId, text } = req.body;
+
     try {
         const commentNew = new comment({
          task: taskId,
@@ -21,7 +22,7 @@ exports.createComment = async(req,res) => {
 
 //get Comment
 
-exports.getComment = async(req,res) => {
+exports.getComment = async (req, res) => {
      
     try {
         const allComment = await comment.find();
@@ -35,7 +36,7 @@ exports.getComment = async(req,res) => {
 
 //get specefic comment
 
-exports.getOneComment = async(req,res) => {
+exports.getOneComment = async (req, res) => {
     const { commentId } = req.params;
 
     try {
@@ -50,14 +51,14 @@ exports.getOneComment = async(req,res) => {
 
 // Update comment
 
-exports.updateComment = async(req,res) => {
+exports.updateComment = async (req, res) => {
     const { commentId } = req.params;
     const { text } = req.body;
     
     try {
         const willUpdate = await comment.findByIdAndUpdate(commentId, { text });
         res.json(willUpdate);
-    }catch(error) {
+    } catch(error) {
         res.status(500).json({
             error: error.message
         });
@@ -66,14 +67,15 @@ exports.updateComment = async(req,res) => {
 
 //delete message
 
-exports.deleteComment = async(req,res) => {
+exports.deleteComment = async (req, res) => {
     const { commentId } = req.params;
+
     try {
          await comment.findByIdAndRemove(commentId);
         res.json({
             message: 'comment delete'
         })
-    }catch(error) {
+    } catch(error) {
         res.status(500).json({
             error: error.message
         });

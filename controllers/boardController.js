@@ -2,6 +2,7 @@ const board = require('../models/Board');
 
 // Create a new board document
 exports.createBoard = async (req, res) => {
+  
   try {
     const { boardName, createdBy } = req.body;
 

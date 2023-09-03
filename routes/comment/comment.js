@@ -7,7 +7,7 @@ const {createComment, getComment ,getOneComment, updateComment , deleteComment} 
 router.post('/addcomment', createComment);
 router.get('/tasks/:taskId/comments', getComment);
 router.get('/comments/:commentId', getOneComment)
-router.put('/comments/:commentsId', updateComment);
-router.delete('/comments/:commentsId', deleteComment);
+router.put('/comments/:commentId', updateComment);
+router.delete('/comments/:commentId', deleteComment);
 
 module.exports = router;
