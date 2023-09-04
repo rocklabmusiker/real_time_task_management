@@ -4,7 +4,7 @@ const invitation = require('../models/boardInvitations');
 //create board invitations
 
 exports.createBoardInvitations = async (req, res) => {
-    const { boardId, invitedUserId, invitedByUserId, message, expirationDate} = req.params;
+    const { boardId, invitedUserId, invitedByUserId, message, expirationDate} = req.body;
 
     try {
         const boradInvitation = new invitation({
@@ -29,7 +29,7 @@ exports.createBoardInvitations = async (req, res) => {
 exports.getBoardInvitations = async (req, res) => {
     const  { userId } = req.params;
     try {
-        const getAllInviatation = await invitation.find(userId);
+        const getAllInviatation = await invitation.find({ invitedUser: userId});
         res.json(getAllInviatation);
     } catch(error) {
         res.status(500).json({
@@ -63,23 +63,6 @@ exports.getAcceptedInvitation = async(req, res) => {
         const boardInvitation = await invitation.find({
             invitedUser: userId,
             status: 'accepted',
-        });
-        res.json(boardInvitation);
-    } catch(error) {
-        res.status(500).json({
-            error: error.message,
-        });
-    }
-};
-
-//get reject board invitation
-
-exports.getPendingInvitation = async (req, res) => {
-    const { userId } = req.params;
-    try {
-        const boardInvitation = await invitation.find({
-            invitedUser: userId,
-            status: 'rejected',
         });
         res.json(boardInvitation);
     } catch(error) {

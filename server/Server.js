@@ -7,6 +7,10 @@ const boardRoutes = require('./routes/board/board');
 const taskRoutes = require('./routes/tasks/task');
 const commentRoutes = require('./routes/comment/comment');
 const authRoutes = require('./routes/auth')
+const milestoneRoutes = require('./routes/milestone/milestone')
+const boardInvitationRouter = require('./routes/boardInvitation/boardInvitation')
+const notificationRoutes = require('./routes/notification/notification');
+const attachmentRouter = require('./routes/attachment/attachment')
 const passportMiddleware = require('./middleware/passport');
 const passport = require('passport');
 
@@ -26,11 +30,15 @@ app.use(passport.initialize());
 passportMiddleware(passport);
 
 //Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes)
 app.use('/user',userRoutes)
 app.use('/board',boardRoutes)
 app.use('/task',taskRoutes)
+app.use('/', milestoneRoutes)
 app.use('/', commentRoutes)
+app.use('/invitation', boardInvitationRouter)
+app.use('/notification', notificationRoutes)
+app.use('/attachment', attachmentRouter)
 app.use(cors())
 app.use(express.json())
 

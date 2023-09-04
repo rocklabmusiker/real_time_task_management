@@ -10,7 +10,7 @@ const taskSchema = new Schema({
     minLength: 4,
     validate: {
       validator: (value) => {
-        const result = Joi.String().trim().min(4).required().validate(value);
+        const result = Joi.string().trim().min(4).required().validate(value);
         (!result) ? false : true;
       },
       message: 'title is not valid'

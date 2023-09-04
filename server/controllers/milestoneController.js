@@ -51,15 +51,16 @@ exports.getMilestoneById = async (req, res) => {
 //update milestone
 
 exports.updateMilestone = async (req,res) => {
-    const { milestoneId } =req.params;
+    const { milestoneId } = req.params;
     const { name, dueDate, status } = req.body;
     try {
         const updateOneMilestone = await milestone.findByIdAndUpdate(
             milestoneId,
             { name, dueDate, status },
-            {new: true},
+            { new: true },
         );
-        res.json(updateMilestone)
+        
+        res.json(updateOneMilestone)
     } catch (error) {
         res.status(500).json({
             error: error.message,
