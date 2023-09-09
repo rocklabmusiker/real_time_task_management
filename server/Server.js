@@ -1,6 +1,3 @@
-const http = require('http');
-const socketIo = require('socket.io');
-const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
@@ -17,10 +14,13 @@ const milestoneRoutes = require('./routes/milestone/milestone')
 const boardInvitationRouter = require('./routes/boardInvitation/boardInvitation')
 const notificationRoutes = require('./routes/notification/notification');
 const attachmentRouter = require('./routes/attachment/attachment')
+const path = require('path');
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+app.get('/', function(req, res){res.sendFile(path.join(__dirname,  'index.html'));
+});
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
 
 require('dotenv').config();
 const PORT = process.env.PORT || 3000 
@@ -46,14 +46,19 @@ app.use('/notification', notificationRoutes)
 app.use('/attachment', attachmentRouter)
 
 //socket io
-io.on('connection', (socket) => {
-  socket.on('message', (message) => {
-    console.log('message received'+ message);
+//Whenever someone connects this gets executed
+io.on('connection', function(socket){
+  console.log('A user connected');
 
-    socket.broadcast.emit('message', message);
+  // Send a message after a timeout of 4seconds
+  setTimeout(function(){
+     socket.send('Sent a message 4seconds after connection!');
+  }, 4000);
+  socket.on('disconnect', function () {
+     console.log('A user disconnected');
   });
 });
 
-server.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`)
 });
