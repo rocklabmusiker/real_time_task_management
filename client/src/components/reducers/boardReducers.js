@@ -1,21 +1,31 @@
-import { BOARD_SUCCESS, BOARD_ERROR } from '../actions/boardActions';
+import {
+  CREATE_BOARD_REQUEST,
+  CREATE_BOARD_SUCCESS,
+  CREATE_BOARD_ERROR
+} from '../actions/boardActions';
 
 const initialState = {
-  board: null,
-  error: null,
+  loading: false,
+  boards: [],
+  error: null
 };
 
-export const boardReducers = (state = initialState, action) => {
-  switch (action.type) {
-    case BOARD_SUCCESS:
-      return {
-        ...state,
-        board: action.payload,
+export const boardReducer = (state = initialState, action) => {
+  switch(action.type) {
+    case CREATE_BOARD_REQUEST:
+      return { ...state, loading: true, error: null };
+    case CREATE_BOARD_SUCCESS:
+      return { 
+        ...state, 
+        loading: false, 
+        boards: [...state.boards, action.payload.newBoard], 
+        error: null 
       };
-    case BOARD_ERROR:
-      return {
-        ...state,
-        error: action.payload,
+    case CREATE_BOARD_ERROR:
+      return { 
+        ...state, 
+        loading: false, 
+        error: action.payload.message || action.payload 
       };
     default:
       return state;

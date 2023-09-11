@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { boardActions } from '../actions/boardActions';
+import { useDispatch } from 'react-redux';
+import { createBoard } from '../actions/boardActions';
+import classes from './board.module.css'; // Import the CSS
 
-const Board = () => {
-  const [boardName, setBoardName] = useState('');
-  const dispatch = useDispatch();
-  const error = useSelector(state => state.board.error);
+const CreateBoardComponent = () => {
+    const [boardName, setBoardName] = useState("");
+    const dispatch = useDispatch();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    dispatch(boardActions(boardName));
-  };
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-  return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input type="text" name="boardName" value={boardName} onChange={(e) => setBoardName(e.target.value)} />
-        <button type="submit">Create Board</button>
-        {error && <p>{error.message}</p>}
-      </form>
-    </div>
-  );
+        if(boardName.trim()) {
+            dispatch(createBoard({ boardName: boardName.trim() }));
+            setBoardName("");
+        }
+    };
+
+    return (
+        <div className={classes.container}>
+            <form onSubmit={handleSubmit} className={classes.form}>
+                <input
+                    type="text"
+                    value={boardName}
+                    onChange={(e) => setBoardName(e.target.value)}
+                    placeholder="Enter board name"
+                    className={classes.input}
+                />
+                <button type="submit" className={classes.button}>Create Board</button>
+            </form>
+        </div>
+    );
 };
 
-export default Board;
+export default CreateBoardComponent;

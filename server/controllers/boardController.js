@@ -5,6 +5,7 @@ exports.createBoard = async (req, res) => {
   
   try {
     const { boardName, createdBy } = req.body;
+    console.log(req.body)
 
     const newBoard = await board.create({
       boardName,

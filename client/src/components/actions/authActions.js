@@ -1,4 +1,4 @@
-import axios from 'axios';
+import instance from './axiosConfig'
 export const loginUserRequest = (userData) => ({
     type: 'LOGIN_USER_REQUEST',
     payload: userData
@@ -15,11 +15,12 @@ export const loginUserError =(error) => ({
 
 export const loginUser = (userData) => dispatch =>{
     dispatch(loginUserRequest());
-    axios.post('http://localhost:3000/api/auth/login',userData)
+    instance.post('/api/auth/login',userData)
     .then(response =>{
         const data = response.data;
         if(data.success){
         dispatch(loginUserSuccess(data.token));
+        localStorage.setItem('authToken',data.token)
         } else {
             dispatch(loginUserError(data.errors));
         }
