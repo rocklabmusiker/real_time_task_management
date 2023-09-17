@@ -48,7 +48,11 @@ router.post('/login', validateLogin, async (req, res) => {
 
     jwt.sign(payload, keys.secretOrKey, { expiresIn: '1h' }, (err, token) => {
       if (err) throw err;
-      res.json({ success: true, token: "Bearer " + token });
+      res.json({ 
+        success: true, 
+        token: "Bearer " + token, 
+        user: { id: user.id, username: user.username, email: user.email } 
+      });
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
