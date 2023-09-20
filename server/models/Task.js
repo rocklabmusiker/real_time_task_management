@@ -1,6 +1,6 @@
-const Joi = require('joi');
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const Joi = require('joi')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 //Model schema for Task
 const taskSchema = new Schema({
   title: {
@@ -10,35 +10,36 @@ const taskSchema = new Schema({
     minLength: 4,
     validate: {
       validator: (value) => {
-        const result = Joi.string().trim().min(4).required().validate(value);
-        (!result) ? false : true;
+        const result = Joi.string().trim().min(4).required().validate(value)
+        !result ? false : true
       },
-      message: 'title is not valid'
+      message: 'title is not valid',
     },
   },
   description: {
     type: String,
     validate: {
       validator: (value) => {
-        const result = Joi.string().allow('',null).validate(value);
-        (!result) ? false : true;
+        const result = Joi.string().allow('', null).validate(value)
+        !result ? false : true
       },
-      message: 'not valid description'
+      message: 'not valid description',
     },
   },
   dueDate: {
     type: Date,
-    
   },
   status: {
     type: String,
     enum: ['Pending', 'In Progress', 'Completed'],
     validate: {
       validator: (value) => {
-        const result = Joi.string().valid('Pending', 'In Progress', 'Completed').validate(value);
-        (!result) ? false : true;
+        const result = Joi.string()
+          .valid('Pending', 'In Progress', 'Completed')
+          .validate(value)
+        !result ? false : true
       },
-      message: 'write valid array of status : Pending In Progress Completed'
+      message: 'write valid array of status : Pending In Progress Completed',
     },
   },
   assignedTo: {
@@ -46,10 +47,13 @@ const taskSchema = new Schema({
     ref: 'User',
     validate: {
       validator: (value) => {
-        const result = joi.string().regex(/^[0-9a-fA-F]{24}$/).validate(value);
-        (!result) ? false : true;
+        const result = joi
+          .string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .validate(value)
+        !result ? false : true
       },
-      message: 'hey your given ObjectId is not matches with mongo object'
+      message: 'hey your given ObjectId is not matches with mongo object',
     },
   },
   board: {
@@ -57,10 +61,12 @@ const taskSchema = new Schema({
     ref: 'Board',
     validate: {
       validator: (value) => {
-        const result = Joi.string().regex(/^[0-9a-fA-F]{24}$/).validate(value);
-        (!result) ? false : true;
+        const result = Joi.string()
+          .regex(/^[0-9a-fA-F]{24}$/)
+          .validate(value)
+        !result ? false : true
       },
-      message: 'hey broh your board given objectId is not match with mongo obj'
+      message: 'hey broh your board given objectId is not match with mongo obj',
     },
   },
   priority: {
@@ -68,22 +74,24 @@ const taskSchema = new Schema({
     default: 1,
     validate: {
       validator: (value) => {
-        const result = Joi.number().default(1).validate(value);
-        (!result) ? false : true;
+        const result = Joi.number().default(1).validate(value)
+        !result ? false : true
       },
-      message: 'in priority please use number'
+      message: 'in priority please use number',
     },
   },
-  tags: [{ 
-    type: String,
-    validate: {
-      validator: (value) => {
-        const result = Joi.array().items(Joi.string()).validate(value);
-        (!result) ? false : true;
+  tags: [
+    {
+      type: String,
+      validate: {
+        validator: (value) => {
+          const result = Joi.array().items(Joi.string()).validate(value)
+          !result ? false : true
+        },
+        message: 'tags are arraay of string',
       },
-      message: 'tags are arraay of string'
     },
-  }],
+  ],
 
   comments: [
     {
@@ -91,10 +99,12 @@ const taskSchema = new Schema({
       ref: 'Comment',
       validate: {
         validator: (value) => {
-          const result = Joi.array().items(Joi.string().regex(/^[0-9a-fA-F]{24}$/)).validate(value);
-          (!result) ? false : true;
+          const result = Joi.array()
+            .items(Joi.string().regex(/^[0-9a-fA-F]{24}$/))
+            .validate(value)
+          !result ? false : true
         },
-        message: 'please provide valid message'
+        message: 'please provide valid message',
       },
     },
   ],
@@ -104,10 +114,12 @@ const taskSchema = new Schema({
       ref: 'Attachment',
       validate: {
         validator: (value) => {
-        const result = Joi.array().items(Joi.string.regex(/^[0-9a-fA-F]{24}$/)).validate(value);
-        (!result) ? false : true;
+          const result = Joi.array()
+            .items(Joi.string.regex(/^[0-9a-fA-F]{24}$/))
+            .validate(value)
+          !result ? false : true
         },
-        message: 'your attachment validation error provie valid attachment'
+        message: 'your attachment validation error provie valid attachment',
       },
     },
   ],
@@ -117,13 +129,15 @@ const taskSchema = new Schema({
       ref: 'Notification',
       validate: {
         validator: (value) => {
-        const result = Joi.array().items(Joi.string.regex(/^[0-9a-fA-F]{24}$/)).validate(value);
-        (!result) ? false : true;
+          const result = Joi.array()
+            .items(Joi.string.regex(/^[0-9a-fA-F]{24}$/))
+            .validate(value)
+          !result ? false : true
         },
-        message: 'olease provide valid notification'
+        message: 'lease provide valid notification',
       },
     },
   ],
-});
-const task = mongoose.model('task', taskSchema);
-module.exports = task;
+})
+const task = mongoose.model('task', taskSchema)
+module.exports = task
